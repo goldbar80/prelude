@@ -82,6 +82,7 @@
 (setq org-reveal-mathjax t)
 
 ;; ox-confluence : confluence exporter
+(prelude-require-packages '(org-plus-contrib))
 (require 'ox-confluence)
 
 ;; add following whenever org-plus-contrib is updated
