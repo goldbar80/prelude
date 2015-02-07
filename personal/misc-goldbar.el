@@ -22,5 +22,19 @@
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
+;; OSX
+(when (eq system-type 'darwin)
+                                        ; fullscreen
+  (defun goldbar/fullscreen ()
+    "Toggle full screen"
+    (interactive)
+    (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+  (global-set-key (kbd "C-c C-f") 'goldbar/fullscreen)
+                                        ; option key as meta
+  (setq mac-command-modifier 'super)
+  (setq mac-option-modifier 'meta))
+
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here
