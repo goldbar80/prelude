@@ -36,5 +36,9 @@
   (setq mac-command-modifier 'super)
   (setq mac-option-modifier 'meta))
 
+;; paradox package interface
+(prelude-require-packages '(paradox))
+
+
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here
