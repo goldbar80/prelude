@@ -39,6 +39,21 @@
 ;; paradox package interface
 (prelude-require-packages '(paradox))
 
+;; korean font
+(prelude-require-packages '(list-utils font-utils))
+(cond
+ ((eq window-system nil) nil)
+ ((font-utils-exists-p "Source Code Pro")
+  (let ((fontset "fontset-default"))
+    (set-fontset-font fontset 'latin
+                      (font-spec :family "Source Code Pro" :weight 'normal :registry "unicode-bmp"))
+    (set-fontset-font fontset 'hangul
+                      '("NanumGothicCoding" . "unicode-bmp"))
+    (set-face-attribute 'default nil
+                        :font fontset
+                        :height 110))))
+
+
 
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here
