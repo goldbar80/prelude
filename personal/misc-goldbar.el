@@ -41,6 +41,7 @@
 
 ;; korean font
 (prelude-require-packages '(list-utils font-utils))
+
 (cond
  ((eq window-system nil) nil)
  ((font-utils-exists-p "Source Code Pro")
@@ -52,6 +53,8 @@
     (set-face-attribute 'default nil
                         :font fontset
                         :height 110))))
+                                        ; increase font size For OSX
+(set-face-attribute 'default nil :font "fontset-default" :height 130)
 
 
 
