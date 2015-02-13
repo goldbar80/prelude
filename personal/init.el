@@ -9,6 +9,6 @@
 (require 'helm-goldbar)
 (require 'company-goldbar)
 (require 'latex-goldbar)
-
+(require 'e2wm-goldbar)
 (require 'eclim-goldbar)
 (require 'misc-goldbar)
