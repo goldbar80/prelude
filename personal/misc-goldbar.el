@@ -22,19 +22,22 @@
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
+;; fullscreen
+(defun goldbar/fullscreen ()
+  "Toggle full screen"
+  (interactive)
+  (set-frame-parameter
+   nil 'fullscreen
+   (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+(global-set-key (kbd "C-c C-f") 'goldbar/fullscreen)
+
 ;; OSX
 (when (eq system-type 'darwin)
-                                        ; fullscreen
-  (defun goldbar/fullscreen ()
-    "Toggle full screen"
-    (interactive)
-    (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-  (global-set-key (kbd "C-c C-f") 'goldbar/fullscreen)
                                         ; option key as meta
   (setq mac-command-modifier 'super)
-  (setq mac-option-modifier 'meta))
+  (setq mac-option-modifier 'meta)
+                                        ; increase font size For OSX
+  (set-face-attribute 'default nil :font "fontset-default" :height 130))
 
 ;; paradox package interface
 (prelude-require-packages '(paradox))
@@ -53,10 +56,6 @@
     (set-face-attribute 'default nil
                         :font fontset
                         :height 110))))
-                                        ; increase font size For OSX
-(set-face-attribute 'default nil :font "fontset-default" :height 130)
-
-
 
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here

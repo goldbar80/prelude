@@ -10,6 +10,9 @@
 (require 'auctex-latexmk)
 (auctex-latexmk-setup)
 
+;; reftex
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
 
 (provide 'latex-goldbar)
 ;;; latex-goldbar.el ends here

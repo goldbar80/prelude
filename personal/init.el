@@ -4,8 +4,8 @@
 (disable-theme 'zenburn)
 
 (require 'htmlize-goldbar)
-(require 'theme-goldbar)
 (require 'powerline-goldbar)
+(require 'theme-goldbar)
 (require 'helm-goldbar)
 (require 'company-goldbar)
 (require 'latex-goldbar)
