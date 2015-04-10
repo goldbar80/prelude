@@ -17,10 +17,8 @@
   (load-theme 'moe-dark t)
   )
 
-(setq moe-theme-mode-line-color 'b/w)
+(setq moe-theme-mode-line-color 'green)
 (powerline-moe-theme)
-
-
 
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
