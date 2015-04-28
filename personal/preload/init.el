@@ -15,11 +15,16 @@
         (setenv "https_proxy" https-proxy-host)
         (setq url-proxy-services
               '(("no_proxy" . no-proxy-host)
-                ("http" . http-proxy-host)
-                ("https" . https-proxy-host)))
-        )
-    )
-  )
+              ("http" . http-proxy-host)
+              ("https" . https-proxy-host))))
+              ;; '(("no_proxy" . "^\\(localhost\\|10.*\\|*.us.oracle.com\\)")
+              ;;   ("http" . "www-proxy.us.oracle.com:80")
+              ;;   ("https" . "www-proxy.us.oracle.com:80"))))
+    (progn
+      (setenv "http_proxy" "")
+      (setenv "https-proxy-host" "")
+      (setq url-proxy-services nil))))
+
 (setup-proxy)
 
 (setq magit-last-seen-setup-instructions "1.4.0")

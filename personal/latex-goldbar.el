@@ -22,6 +22,8 @@
           ("PDF Viewer" "open -a Skim %o")
           ("HTML Viewer" "open %o"))))
 
+;; reftex
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 
 (provide 'latex-goldbar)

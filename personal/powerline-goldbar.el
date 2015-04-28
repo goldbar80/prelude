@@ -7,9 +7,9 @@
 
 (prelude-require-package 'powerline)
 
-(custom-set-faces
- '(mode-line ((t (:box nil :height 110 :weight light))))
- '(mode-line-inactive ((t (:box nil :height 90 :weight light)))))
+;; (custom-set-faces
+;;  '(mode-line ((t (:box nil :height 110 :weight light))))
+;;  '(mode-line-inactive ((t (:box nil :height 90 :weight light)))))
 
 ;; for solarized-light
 ;; (defface powerline-active1-g '((t (:background "#ada96e" :inherit mode-line)))
@@ -70,44 +70,44 @@
 
 ;; for twilight-anti-bright
 
-(if (window-system)
-    (progn
-      (defface powerline-active1-g '((t (:foreground "#8eafd9" :background "#3b535e" :inherit mode-line)))
-        "Powerline face 1."
-        :group 'powerline)
+;; (if (window-system)
+;;     (progn
+;;       (defface powerline-active1-g '((t (:foreground "#8eafd9" :background "#3b535e" :inherit mode-line)))
+;;         "Powerline face 1."
+;;         :group 'powerline)
 
-      (defface powerline-active2-g '((t (:foreground "#aecff9" :background "#6b838e" :inherit mode-line)))
-        "Powerline face 2."
-        :group 'powerline)
+;;       (defface powerline-active2-g '((t (:foreground "#aecff9" :background "#6b838e" :inherit mode-line)))
+;;         "Powerline face 2."
+;;         :group 'powerline)
 
-      (defface powerline-inactive1-g
-        '((t (:foreground "#567e9a" :background "#3f4750" :inherit mode-line-inactive)))
-        "Powerline face 1."
-        :group 'powerline)
+;;       (defface powerline-inactive1-g
+;;         '((t (:foreground "#567e9a" :background "#3f4750" :inherit mode-line-inactive)))
+;;         "Powerline face 1."
+;;         :group 'powerline)
 
-      (defface powerline-inactive2-g
-        '((t (:foreground "#769eba" :background "#6f7780" :inherit mode-line-inactive)))
-        "Powerline face 2."
-        :group 'powerline))
-  (progn
-    (defface powerline-active1-g '((t (:foreground "black" :background "white" :inherit mode-line)))
-      "Powerline face 1."
-      :group 'powerline)
+;;       (defface powerline-inactive2-g
+;;         '((t (:foreground "#769eba" :background "#6f7780" :inherit mode-line-inactive)))
+;;         "Powerline face 2."
+;;         :group 'powerline))
+;;   (progn
+;;     (defface powerline-active1-g '((t (:foreground "black" :background "white" :inherit mode-line)))
+;;       "Powerline face 1."
+;;       :group 'powerline)
 
-    (defface powerline-active2-g '((t (:foreground "white" :background "black" :inherit mode-line)))
-      "Powerline face 2."
-      :group 'powerline)
+;;     (defface powerline-active2-g '((t (:foreground "white" :background "black" :inherit mode-line)))
+;;       "Powerline face 2."
+;;       :group 'powerline)
 
-    (defface powerline-inactive1-g
-      '((t (:foreground "black" :background "DimGray" :inherit mode-line-inactive)))
-      "Powerline face 1."
-      :group 'powerline)
+;;     (defface powerline-inactive1-g
+;;       '((t (:foreground "black" :background "DimGray" :inherit mode-line-inactive)))
+;;       "Powerline face 1."
+;;       :group 'powerline)
 
-    (defface powerline-inactive2-g
-      '((t (:foreground "DimGray" :background "black" :inherit mode-line-inactive)))
-      "Powerline face 2."
-      :group 'powerline))
-  )
+;;     (defface powerline-inactive2-g
+;;       '((t (:foreground "DimGray" :background "black" :inherit mode-line-inactive)))
+;;       "Powerline face 2."
+;;       :group 'powerline))
+;;   )
 
 ;; for base16-mocha
 
@@ -151,9 +151,6 @@
 ;;   :group 'powerline)
 
 (require 'powerline)
-
-
-
 
 (setq-default mode-line-format
               '("%e"
