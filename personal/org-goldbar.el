@@ -98,7 +98,7 @@
                                         ;todo keywords
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "|" "DONE(d!/!)")
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
         (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(o)" "|" "CANCELLED(c@/!)")))
                                         ;agenda custom command
 (setq org-agenda-custom-commands
@@ -191,7 +191,12 @@
 (add-hook 'org-agenda-mode-hook 'custom-org-agenda-mode-defaults 'append)
 
 
+;; always show time grid in agenda view
+(setq org-agenda-time-grid '((daily today today)
+                             #("----------------" 0 16 (org-heading t))
+                             (800 1000 1200 1400 1600 1800 2000)))
 
-
+;;
+(setq org-agenda-span 1)
 (provide 'org-goldbar)
 ;;; org-goldbar.el ends here
