@@ -307,7 +307,11 @@
 
 (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
-;;
+;; toc-org
+(prelude-require-packages '(toc-org))
+(add-hook 'org-mode-hook 'toc-org-enable)
+
+;; ??
 (setq org-agenda-span 1)
 (provide 'org-goldbar)
 ;;; org-goldbar.el ends here
