@@ -13,11 +13,11 @@
 ;;(moe-theme-set-color 'magneta)
 
 (if (window-system)
-    (load-theme 'base16-flat-dark t)
+    (load-theme 'sanityinc-solarized-light)
   (load-theme 'moe-dark t)
   )
 
-(setq moe-theme-mode-line-color 'green)
+(setq moe-theme-mode-line-color 'orange)
 (powerline-moe-theme)
 
 (provide 'theme-goldbar)
