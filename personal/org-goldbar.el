@@ -95,12 +95,14 @@
 (require 'org-helpers)
                                         ;agenda Dir
 (setq org-agenda-files (quote ("~/git/agenda")))
-                                        ;todo keywords
 
+                                        ;todo keywords
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
         (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(o)" "|" "CANCELLED(c@/!)")))
                                         ;agenda custom command
+
+(setq org-agenda-window-setup 'current-window)
 
 (setq org-todo-keyword-faces
       (quote (("TODO" :foreground "red" :weight bold)
@@ -197,11 +199,16 @@
 ;; org-pomodoro
 (prelude-require-packages '(org-pomodoro))
 (require 'org-pomodoro)
-;;                                         ; shortcut
+                                        ; shortcut
 (global-set-key (kbd "C-c C-x C-i") 'org-pomodoro)
 (global-set-key (kbd "C-c C-x C-o") 'org-pomodoro)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-x C-i") 'org-pomodoro)
+            (local-set-key (kbd "C-c C-x C-o") 'org-pomodoro))
+          'append)
                                         ; agenda shortcut
-;; Needs terminal-notifier (brew install terminal-notifier)
+                                        ; Needs terminal-notifier (brew install terminal-notifier)
 (defun notify-osx (title message)
   (call-process "terminal-notifier"
                 nil 0 nil
@@ -210,7 +217,7 @@
                 "-sender" "org.gnu.Emacs"
                 "-message" message))
 
-;; org-pomodoro mode hooks
+                                        ; org-pomodoro mode hooks
 (add-hook 'org-pomodoro-finished-hook
           (lambda ()
             (notify-osx "Pomodoro completed!" "Time for a break.")))
@@ -265,14 +272,6 @@
                "* TODO Review %c\n%U\n" :immediate-finish t)
               ("h" "Habit" entry (file "~/.refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
-;;;; capture hook
-(defun remove-empty-drawer-on-clock-out ()
-  (interactive)
-  (save-excursion
-    (beginning-of-line 0)
-    (org-remove-empty-drawer-at "LOGBOOK" (point))))
-
-(add-hook 'org-clock-out-hook 'remove-empty-drawer-on-clock-out 'append)
 
 ;; refile
 ;;;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
