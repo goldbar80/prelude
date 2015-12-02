@@ -7,11 +7,11 @@
 
 ;; level faces
 (custom-set-faces
- '(org-level-1 ((t (:inherit outline-1 :height 2.0 :weight bold))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.7 :weight bold))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.3 :weight bold))))
- '(org-level-4 ((t (:inherit outline-4 :slant normal :height 1.1 :weight bold))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.05 :weight bold))))
+ '(org-level-1 ((t (:inherit outline-1 :weight bold :height 1.3))))
+ '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.3))))
+ '(org-level-3 ((t (:inherit outline-3 :weight bold :height 1.3))))
+ '(org-level-4 ((t (:inherit outline-4 :slant normal :weight bold :height 1.3))))
+ '(org-level-5 ((t (:inherit outline-5 :weight bold :height 1.3))))
  )
 
 ;; hide leading stars
@@ -199,6 +199,7 @@
 ;; org-pomodoro
 (prelude-require-packages '(org-pomodoro))
 (require 'org-pomodoro)
+(setq org-pomodoro-keep-killed-pomodoro-time t)
                                         ; shortcut
 (global-set-key (kbd "C-c C-x C-i") 'org-pomodoro)
 (global-set-key (kbd "C-c C-x C-o") 'org-pomodoro)
@@ -274,34 +275,34 @@
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 ;; refile
-;;;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+                                        ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
 
-;;;; Use full outline paths for refile targets - we file directly with IDO
+                                        ; Use full outline paths for refile targets - we file directly with IDO
 (setq org-refile-use-outline-path t)
 
-;;;; Targets complete directly with IDO
+                                        ; Targets complete directly with IDO
 (setq org-outline-path-complete-in-steps nil)
 
-;;;; Allow refile to create parent tasks with confirmation
+                                        ; Allow refile to create parent tasks with confirmation
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 
-;;;; Use IDO for both buffer and file completion and ido-everywhere to t
+                                        ; Use IDO for both buffer and file completion and ido-everywhere to t
 (setq org-completion-use-ido t)
 (setq ido-everywhere t)
 (setq ido-max-directory-size 100000)
 (ido-mode (quote both))
-;;;; Use the current window when visiting files and buffers with ido
+                                        ; Use the current window when visiting files and buffers with ido
 (setq ido-default-file-method 'selected-window)
 (setq ido-default-buffer-method 'selected-window)
-;;;; Use the current window for indirect buffer display
+                                        ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
 
 ;;;; Refile settings
-; Exclude DONE state tasks from refile targets
+                                        ; Exclude DONE state tasks from refile targets
 (defun bh/verify-refile-target ()
-  "Exclude todo keywords with a done state from refile targets"
+  "Exclude todo keywords with a done state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
 (setq org-refile-target-verify-function 'bh/verify-refile-target)
@@ -310,6 +311,12 @@
 (prelude-require-packages '(toc-org))
 (add-hook 'org-mode-hook 'toc-org-enable)
 
+;; company setting
+(defun goldbar/org-mode-hook-setup ()
+  (make-local-variable 'company-backends)
+  (add-to-list 'company-backends 'company-ispell))
+
+(add-hook 'org-mode-hook 'goldbar/org-mode-hook-setup)
 ;; ??
 (setq org-agenda-span 1)
 (provide 'org-goldbar)
