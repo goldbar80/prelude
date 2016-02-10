@@ -243,6 +243,8 @@
   (org-defkey org-agenda-mode-map "q" 'bury-buffer)
   (org-defkey org-agenda-mode-map "I" 'org-pomodoro)
   (org-defkey org-agenda-mode-map "O" 'org-pomodoro)
+  (org-defkey org-agenda-mode-map "i" 'org-agenda-clock-in)
+  (org-defkey org-agenda-mode-map "o" 'org-agenda-clock-out)
   (org-defkey org-agenda-mode-map (kbd "C-c C-x C-i") 'org-pomodoro)
   (org-defkey org-agenda-mode-map (kbd "C-c C-x C-o") 'org-pomodoro))
 
