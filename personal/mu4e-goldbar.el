@@ -5,6 +5,7 @@
 
 ;;; Code:
 (require 'mu4e)
+(require 'org-mu4e)
 (setq mu4e-maildir "~/Maildir")
 (setq mu4e-drafts-folder "/Drafts")
 (setq mu4e-sent-folder   "/Sent Messages")
@@ -28,8 +29,10 @@
       "Cheers,\n"
       "Jinha\n"))
 
+;; fancy character
+(setq mu4e-use-fancy-chars t)
 ;; show images
-(setq mu4e-show-images t)
+(setq mu4e-view-show-images t)
 
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
@@ -57,7 +60,7 @@
 (add-to-list 'mu4e-view-actions
              '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 (add-to-list 'mu4e-view-actions
-             '("test" . mu4e-action-view-with-xwidget) t)
+             '("Xwidget" . mu4e-action-view-with-xwidget) t)
 
 ;; fetch mail every 5 mins
 (setq mu4e-update-interval 300)
