@@ -16,3 +16,4 @@
 (require 'theme-goldbar)
 (require 'powerline-goldbar)
 (require 'mu4e-goldbar)
+(require 'gradle-goldbar)
