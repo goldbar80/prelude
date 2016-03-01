@@ -19,6 +19,9 @@
 ;; no scrollbar
 (scroll-bar-mode -1)
 
+;; old style fullscreen
+(setq ns-use-native-fullscreen nil)
+
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
