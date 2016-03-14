@@ -31,7 +31,8 @@
    (dot . t)
    (ditaa . t)
    (perl . t)
-   (latex . t))
+   (latex . t)
+   (gnuplot . t))
  )
 
                                         ; window setup

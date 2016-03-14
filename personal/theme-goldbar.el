@@ -13,7 +13,7 @@
 ;;(moe-theme-set-color 'magneta)
 
 (if (window-system)
-    (load-theme 'solarized-light)
+    (load-theme 'solarized-dark)
   (load-theme 'moe-dark t)
   )
 (setq solarized-high-contrast-mode-line nil)
