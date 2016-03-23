@@ -13,6 +13,9 @@
   (load-file (concat prelude-dir "init.el"))
   )
 
+;; coding system
+(setq-default buffer-file-coding-system 'utf-8)
+
 ;; no menubar
 (menu-bar-mode -1)
 
