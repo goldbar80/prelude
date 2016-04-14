@@ -65,7 +65,6 @@
 
 (global-set-key (kbd "C-c |") 'toggle-window-split)
 
-
 ;; OSX
 (when (eq system-type 'darwin)
                                         ; option key as meta
