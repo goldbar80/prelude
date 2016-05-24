@@ -7,16 +7,16 @@
 ;; theme
 (add-to-list 'custom-theme-load-path (concat prelude-dir "themes"))
 
-(prelude-require-packages '(moe-theme solarized-theme))
+(prelude-require-packages '(moe-theme solarized-theme dracula-theme))
 (require 'moe-theme)
 ;;(load-theme 'moe-dark t)
 ;;(moe-theme-set-color 'magneta)
 
 (if (window-system)
-    (load-theme 'solarized-dark)
+    (load-theme 'dracula)
   (load-theme 'moe-dark t)
   )
-(setq solarized-high-contrast-mode-line nil)
+;;(setq solarized-high-contrast-mode-line nil)
 (setq ns-use-srgb-colorspace nil)
 
 ;; powerline
@@ -33,7 +33,7 @@
 
 (powerline-reset)
 (require 'spaceline-config)
-(setq powerline-default-separator 'box)
+(setq powerline-default-separator 'arrow)
 (setq powerline-height 18)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)

@@ -2,7 +2,6 @@
 
 ;; disable default theme (zenburn)
 (disable-theme 'zenburn)
-
 (require 'htmlize-goldbar)
 (require 'helm-goldbar)
 (require 'company-goldbar)
