@@ -25,6 +25,6 @@
       (setenv "https-proxy-host" "")
       (setq url-proxy-services nil))))
 
-;;(setup-proxy)
+(setup-proxy)
 
 (setq magit-last-seen-setup-instructions "1.4.0")

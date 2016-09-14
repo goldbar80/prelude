@@ -32,6 +32,7 @@
    (ditaa . t)
    (perl . t)
    (latex . t)
+   (groovy . t)
    (gnuplot . t))
  )
 

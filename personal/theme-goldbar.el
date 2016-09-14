@@ -48,5 +48,6 @@
 (prelude-require-package 'mode-icons)
 (mode-icons-mode)
 
+
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
