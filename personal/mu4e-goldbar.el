@@ -75,7 +75,7 @@
 (require 'smtpmail)
 
 (setq message-send-mail-function 'smtpmail-send-it
-      auth-sources (quote (macos-keychain-internet oacos-keychain-generic))
+      auth-sources (quote (macos-keychain-internet macos-keychain-generic))
       smtpmail-default-smtp-server "stbeehive.oracle.com"
       smtpmail-smtp-server "stbeehive.oracle.com"
       smtpmail-smtp-service 465
