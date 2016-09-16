@@ -7,7 +7,6 @@
 (require 'company-goldbar)
 (require 'latex-goldbar)
 (require 'e2wm-goldbar)
-(require 'eclim-goldbar)
 (require 'java-goldbar)
 (require 'scala-goldbar)
 (require 'groovy-goldbar)

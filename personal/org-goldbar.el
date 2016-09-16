@@ -96,7 +96,7 @@
 (require 'org-habit)
 (require 'org-helpers)
                                         ;agenda Dir
-(setq org-agenda-files (quote ("~/git/agenda")))
+(setq org-agenda-files (quote ("~/syncthing/agenda")))
 
                                         ;todo keywords
 (setq org-todo-keywords

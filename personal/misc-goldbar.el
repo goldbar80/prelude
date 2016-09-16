@@ -81,17 +81,20 @@
 
 (cond
  ((eq window-system nil) nil)
- ((font-utils-exists-p "Source Code Pro")
+ ((font-utils-exists-p "Source Code Pro for Powerline")
   (let ((fontset "fontset-default"))
     (set-fontset-font fontset 'unicode (font-spec :family "Source Code Pro for Powerline" :weight 'light :registry "unicode-bmp"))
     (set-fontset-font fontset 'latin
                       (font-spec :family "Source Code Pro for Powerline" :weight 'light :registry "unicode-bmp"))
     (set-fontset-font fontset 'hangul
                       '("NanumGothicCoding" . "unicode-bmp"))
-;    (set-face-font 'default "Inconsolata-10")
-    (set-face-attribute 'default nil
-                        :font fontset
-                        :height 140))))
+    (if (eq system-type 'darwin)
+        (set-face-attribute 'default nil :font fontset :height 140)
+      (set-face-attribute 'default nil :font fontset :height 120)
+      )
+    )
+  )
+ )
 
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here
