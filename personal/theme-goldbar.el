@@ -7,13 +7,20 @@
 ;; theme
 (add-to-list 'custom-theme-load-path (concat prelude-dir "themes"))
 
-(prelude-require-packages '(moe-theme solarized-theme dracula-theme))
-(require 'moe-theme)
-;;(load-theme 'moe-dark t)
-;;(moe-theme-set-color 'magneta)
+(prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree))
 
 (if (window-system)
-    (load-theme 'dracula)
+    (progn
+      (load-theme 'doom-one)
+      ;;; OPTIONAL
+      ;; brighter source buffers
+      (add-hook 'find-file-hook 'doom-buffer-mode)
+      ;; brighter minibuffer when active
+      (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
+      ;; Custom neotree theme
+      (require 'doom-neotree)
+      (setq doom-neotree-enable-file-icons t)
+      )
   (load-theme 'moe-dark t)
   )
 ;;(setq solarized-high-contrast-mode-line nil)
@@ -23,7 +30,7 @@
 ;; (setq moe-theme-mode-line-color 'yellow)
 ;; (powerline-moe-theme)
 
-(prelude-require-packages '(spaceline eyebrowse persp-mode window-numbering anzu))
+(prelude-require-packages '(powerline spaceline eyebrowse persp-mode window-numbering anzu))
 
 ;; date format
 (setq display-time-string-forms '((format
@@ -31,10 +38,10 @@
 
 (display-time-mode t)
 
-(powerline-reset)
+;;(powerline-reset)
 (require 'spaceline-config)
-(setq powerline-default-separator 'arrow)
-(setq powerline-height 18)
+(setq powerline-default-separator 'rounded)
+(setq powerline-height 21)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)
 (setq spaceline-workspace-numbers-unicode t)
@@ -47,7 +54,6 @@
 ;; major mode icons
 (prelude-require-package 'mode-icons)
 (mode-icons-mode)
-
 
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
