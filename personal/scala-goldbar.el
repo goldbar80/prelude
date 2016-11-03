@@ -3,7 +3,7 @@
 (prelude-require-packages '(scala-mode ensime))
 
 (require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(add-hook 'scala-mode-hook 'ensime-mode)
 
 ;; for rscala
 (setenv "rscala_dir" "/usr/local/lib/R/3.2/site-library/rscala/java")
