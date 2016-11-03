@@ -7,19 +7,20 @@
 ;; theme
 (add-to-list 'custom-theme-load-path (concat prelude-dir "themes"))
 
-(prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree))
+(prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
 (if (window-system)
     (progn
-      (load-theme 'doom-one)
-      ;;; OPTIONAL
-      ;; brighter source buffers
-      (add-hook 'find-file-hook 'doom-buffer-mode)
-      ;; brighter minibuffer when active
-      (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-      ;; Custom neotree theme
-      (require 'doom-neotree)
-      (setq doom-neotree-enable-file-icons t)
+      ;; (load-theme 'doom-one)
+      ;; ;;; OPTIONAL
+      ;; ;; brighter source buffers
+      ;; (add-hook 'find-file-hook 'doom-buffer-mode)
+      ;; ;; brighter minibuffer when active
+      ;; (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
+      ;; ;; Custom neotree theme
+      ;; (require 'doom-neotree)
+      ;; (setq doom-neotree-enable-file-icons t)
+      (load-theme 'spacemacs-dark)
       )
   (load-theme 'moe-dark t)
   )
