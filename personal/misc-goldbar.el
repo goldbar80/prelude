@@ -25,6 +25,9 @@
 ;; old style fullscreen
 (setq ns-use-native-fullscreen nil)
 
+;; git-gutter
+(prelude-require-package 'git-gutter+)
+
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
