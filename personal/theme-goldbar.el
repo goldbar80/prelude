@@ -9,21 +9,8 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
-(if (window-system)
-    (progn
-      ;; (load-theme 'doom-one)
-      ;; ;;; OPTIONAL
-      ;; ;; brighter source buffers
-      ;; (add-hook 'find-file-hook 'doom-buffer-mode)
-      ;; ;; brighter minibuffer when active
-      ;; (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-      ;; ;; Custom neotree theme
-      ;; (require 'doom-neotree)
-      ;; (setq doom-neotree-enable-file-icons t)
-      (load-theme 'spacemacs-dark)
-      )
-  (load-theme 'moe-dark t)
-  )
+(load-theme 'spacemacs-light)
+
 ;;(setq solarized-high-contrast-mode-line nil)
 (setq ns-use-srgb-colorspace nil)
 
@@ -31,7 +18,8 @@
 ;; (setq moe-theme-mode-line-color 'yellow)
 ;; (powerline-moe-theme)
 
-(prelude-require-packages '(powerline spaceline eyebrowse persp-mode window-numbering anzu))
+(prelude-require-packages '(powerline spaceline eyebrowse persp-mode window-numbering anzu all-the-icons))
+(require 'all-the-icons)
 
 ;; date format
 (setq display-time-string-forms '((format
@@ -49,14 +37,25 @@
 (setq spaceline-window-numbers-unicode t)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)
 (setq spaceline-minor-modes-p nil)
+(setq spaceline-version-control-p t)
 (setq anzu-cons-mode-line-p nil)
+;; fancy git icon
+(defadvice vc-mode-line (after strip-backend () activate)
+  (when (stringp vc-mode)
+    (let ((gitlogo (replace-regexp-in-string "^ Git." "  " vc-mode)))
+      (setq vc-mode gitlogo))))
+
 (spaceline-spacemacs-theme)
+(spaceline-helm-mode)
+(spaceline-info-mode)
 
 ;; major mode icons
 (prelude-require-package 'mode-icons)
 (mode-icons-mode)
 
-
-
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
+
+
+
+(message (vc-mode-line (buffer-file-name)))
