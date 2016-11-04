@@ -40,7 +40,7 @@
 
 ;;(powerline-reset)
 (require 'spaceline-config)
-(setq powerline-default-separator 'rounded)
+(setq powerline-default-separator 'slant)
 (setq powerline-height 21)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)
@@ -54,6 +54,8 @@
 ;; major mode icons
 (prelude-require-package 'mode-icons)
 (mode-icons-mode)
+
+
 
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here

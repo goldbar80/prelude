@@ -6,13 +6,18 @@
 ;;; Code:
 
 ;; level faces
-(custom-set-faces
- '(org-level-1 ((t (:inherit outline-1 :weight bold :height 1.3))))
- '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.3))))
- '(org-level-3 ((t (:inherit outline-3 :weight bold :height 1.3))))
- '(org-level-4 ((t (:inherit outline-4 :slant normal :weight bold :height 1.3))))
- '(org-level-5 ((t (:inherit outline-5 :weight bold :height 1.3))))
- )
+;; (custom-set-faces
+;;  '(org-level-1 ((t (:inherit outline-1 :weight bold :height 1.3))))
+;;  '(org-level-2 ((t (:inherit outline-2 :weight bold :height 1.3))))
+;;  '(org-level-3 ((t (:inherit outline-3 :weight bold :height 1.3))))
+;;  '(org-level-4 ((t (:inherit outline-4 :slant normal :weight bold :height 1.3))))
+;;  '(org-level-5 ((t (:inherit outline-5 :weight bold :height 1.3))))
+;;  )
+
+;; fontify
+(setq org-fontify-whole-heading-line t
+      org-fontify-done-headline t
+      org-fontify-quote-and-verse-blocks t)
 
 ;; hide leading stars
 (setq org-hide-leading-stars t)
@@ -33,7 +38,8 @@
    (perl . t)
    (latex . t)
    (groovy . t)
-   (gnuplot . t))
+   (gnuplot . t)
+   (plantuml . t))
  )
 
                                         ; window setup
@@ -44,20 +50,20 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-(setq org-bullets-bullet-list
-      '(
-      ;;; Large
-        "◉"
-        "●"
-        "○"
-        "◆"
-        "◇"
-      ;;; Small
-        "►"
-        "•"
-        "★"
-        "▸"
-        ))
+;; (setq org-bullets-bullet-list
+;;       '(
+;;       ;;; Large
+;;         "◉"
+;;         "●"
+;;         "○"
+;;         "◆"
+;;         "◇"
+;;       ;;; Small
+;;         "►"
+;;         "•"
+;;         "★"
+;;         "▸"
+;;         ))
 
 ;; org-present
 (prelude-require-packages '(org-present))
@@ -82,6 +88,11 @@
 (require 'ox-reveal)
 (setq org-reveal-root (concat "file://" (getenv "HOME") "/git/reveal.js"))
 (setq org-reveal-mathjax t)
+
+;; org-ioslide
+(prelude-require-packages '(ox-ioslide))
+(require 'ox-ioslide)
+(require 'ox-ioslide-helper)
 
 ;; ox-confluence : confluence exporter
 (prelude-require-packages '(org-plus-contrib))

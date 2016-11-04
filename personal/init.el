@@ -13,7 +13,6 @@
 (require 'groovy-goldbar)
 (require 'misc-goldbar)
 (require 'theme-goldbar)
-(require 'powerline-goldbar)
 (require 'mu4e-goldbar)
 (require 'gradle-goldbar)
 (require 'ess-goldbar)
