@@ -84,11 +84,11 @@
 
 (cond
  ((eq window-system nil) nil)
- ((font-utils-exists-p "Source Code Pro for Powerline")
+ ((font-utils-exists-p "Source Code Pro")
   (let ((fontset "fontset-default"))
-    (set-fontset-font fontset 'unicode (font-spec :family "Source Code Pro for Powerline" :weight 'light :registry "unicode-bmp"))
+    (set-fontset-font fontset 'unicode (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
     (set-fontset-font fontset 'latin
-                      (font-spec :family "Source Code Pro for Powerline" :weight 'light :registry "unicode-bmp"))
+                      (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
     (set-fontset-font fontset 'hangul
                       '("NanumGothicCoding" . "unicode-bmp"))
     (if (eq system-type 'darwin)
