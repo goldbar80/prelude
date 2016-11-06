@@ -60,7 +60,7 @@
       (concat
        (propertize (format-time-string "%H:%M ") 'face `(:height 1 :inherit) 'display '(raise 0.1))
        (propertize (format "%s" icon)
-                   'face `(:height 1.1 :family ,(all-the-icons-wicon-family) :inherit)
+                   'face `(:height 1 :family ,(all-the-icons-wicon-family) :inherit)
                    'display '(raise 0.0))))
     :tight t)
 
