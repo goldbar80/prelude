@@ -30,7 +30,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-   (sh . t)
+   (shell . t)
    (python . t)
    (ruby . t)
    (dot . t)
@@ -42,6 +42,8 @@
    (plantuml . t))
  )
 
+                                        ; disable code execution during exporting
+(setq org-export-babel-evaluate nil)
                                         ; window setup
 (setq org-src-window-setup 'current-window)
 
