@@ -9,7 +9,7 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
-(load-theme 'spacemacs-light)
+(load-theme 'spacemacs-dark)
 
 ;;(setq solarized-high-contrast-mode-line nil)
 (setq ns-use-srgb-colorspace nil)
@@ -24,6 +24,8 @@
 (add-to-list 'all-the-icons-icon-alist '("\\.sc$" all-the-icons-alltheicon "scala" :face all-the-icons-red))
 (add-to-list 'all-the-icons-icon-alist '("\\.sbt$" all-the-icons-fileicon "sbt" :face all-the-icons-blue))
 (add-to-list 'all-the-icons-mode-icon-alist '(sbt-mode  all-the-icons-fileicon "sbt" :v-adjust -0.1))
+(add-to-list 'all-the-icons-mode-icon-alist '(mu4e-headers-mode all-the-icons-octicon "mail-read"))
+(add-to-list 'all-the-icons-mode-icon-alist '(mu4e-view-mode all-the-icons-octicon "mail-read"))
 
 (setq yahoo-weather-location "San Jose, USA")
 (yahoo-weather-mode)
@@ -95,10 +97,6 @@
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
     (concat
      (propertize (all-the-icons-alltheicon "git") 'face '(:height 1.1 :inherit) 'display '(raise 0.1))
-     ;; (propertize "·")
-     ;; (propertize (format "%s" (all-the-icons-octicon "git-branch"))
-     ;;             'face `(:family ,(all-the-icons-octicon-family) :height 1.0 :inherit)
-     ;;             'display '(raise 0.1))
      (propertize (format " %s" branch) 'face `(:inherit) 'display '(raise 0.1)))))
 
 (defun spaceline---svn-vc ()
@@ -112,9 +110,26 @@
 (spaceline-define-segment
     version-control "An `all-the-icons' segment for the current Version Control icon"
     (when vc-mode
-      (cond ((string-match "Git[:-]" vc-mode) (spaceline---github-vc))
-            ((string-match "SVN-" vc-mode) (spaceline---svn-vc))
-            (t (propertize (format "%s" vc-mode)))))
+      (concat
+       (cond ((string-match "Git[:-]" vc-mode) (spaceline---github-vc))
+             ((string-match "SVN-" vc-mode) (spaceline---svn-vc))
+             (t (propertize (format "%s" vc-mode))))
+       (let ((icon (when (buffer-file-name)
+                     (pcase (vc-state (buffer-file-name))
+                       (`up-to-date (all-the-icons-faicon "thumbs-up"))
+                       (`edited (all-the-icons-faicon "pencil"))
+                       (`added (all-the-icons-faicon "plus"))
+                       (`unregistered (all-the-icons-faicon "question"))
+                       (`removed (all-the-icons-faicon "minus"))
+                       (`needs-merge (all-the-icons-octicon "git-merge"))
+                       (`needs-update (all-the-icons-octicon "arror-down"))
+                       (`ignored (all-the-icons-wicon "moon-0"))
+                       (`conflict (all-the-icons-wicon "lightening"))
+                       (_ "")
+                       ))))
+         (propertize (format " %s" icon) 'face `(:inherit) 'display `(raise 0.1))
+         )
+       ))
     :when active)
 
 (spaceline-define-segment
