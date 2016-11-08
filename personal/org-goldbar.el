@@ -492,78 +492,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
       (goto-char parent-task)
       parent-task)))
 
-;; Custom agenda command definitions
-;; (setq org-agenda-custom-commands
-;;       '(("a" "Agenda"
-;;        ((agenda "" nil)
-;;           (alltodo ""
-;;                    ((org-agenda-overriding-header "Tasks to Refile")
-;;                     (org-agenda-files '("~/.refile.org"))
-;;                     (org-agenda-skip-function
-;;                      '(oh/agenda-skip :headline-if-restricted-and '(todo)))))
-;;           (tags-todo "-CANCELLED/!-HOLD-WAITING"
-;;                      ((org-agenda-overriding-header "Stuck Projects")
-;;                       (org-agenda-skip-function
-;;                        '(oh/agenda-skip :subtree-if '(inactive non-project non-stuck-project habit scheduled deadline)))))
-;;           (tags-todo "-WAITING-CANCELLED/!NEXT"
-;;                      ((org-agenda-overriding-header "Next Tasks")
-;;                       (org-agenda-skip-function
-;;                        '(oh/agenda-skip :subtree-if '(inactive project habit scheduled deadline)))
-;;                       (org-tags-match-list-sublevels t)
-;;                       (org-agenda-sorting-strategy '(todo-state-down effort-up category-keep))))
-;;           (tags-todo "-CANCELLED/!-NEXT-HOLD-WAITING"
-;;                      ((org-agenda-overriding-header "Available Tasks")
-;;                       (org-agenda-skip-function
-;;                        '(oh/agenda-skip :headline-if '(project)
-;;                                         :subtree-if '(inactive habit scheduled deadline)
-;;                                         :subtree-if-unrestricted-and '(subtask)
-;;                                         :subtree-if-restricted-and '(single-task)))
-;;                       (org-agenda-sorting-strategy '(category-keep))))
-;;           (tags-todo "-CANCELLED/!"
-;;                      ((org-agenda-overriding-header "Currently Active Projects")
-;;                       (org-agenda-skip-function
-;;                        '(oh/agenda-skip :subtree-if '(non-project stuck-project inactive habit)
-;;                                         :headline-if-unrestricted-and '(subproject)
-;;                                         :headline-if-restricted-and '(top-project)))
-;;                       (org-agenda-sorting-strategy '(category-keep))))
-;;           (tags-todo "-CANCELLED/!WAITING|HOLD"
-;;                      ((org-agenda-overriding-header "Waiting and Postponed Tasks")
-;;                       (org-agenda-skip-function
-;;                        '(oh/agenda-skip :subtree-if '(project habit))))))
-;;          nil)
-;;         ("r" "Tasks to Refile" alltodo ""
-;;          ((org-agenda-overriding-header "Tasks to Refile")
-;;           (org-agenda-files '("~/.refile.org"))))
-;;         ("#" "Stuck Projects" tags-todo "-CANCELLED/!-HOLD-WAITING"
-;;          ((org-agenda-overriding-header "Stuck Projects")
-;;           (org-agenda-skip-function
-;;            '(oh/agenda-skip :subtree-if '(inactive non-project non-stuck-project
-;;                                           habit scheduled deadline)))))
-;;         ("n" "Next Tasks" tags-todo "-WAITING-CANCELLED/!NEXT"
-;;          ((org-agenda-overriding-header "Next Tasks")
-;;           (org-agenda-skip-function
-;;            '(oh/agenda-skip :subtree-if '(inactive project habit scheduled deadline)))
-;;           (org-tags-match-list-sublevels t)
-;;           (org-agenda-sorting-strategy '(todo-state-down effort-up category-keep))))
-;;         ("R" "Tasks" tags-todo "-CANCELLED/!-NEXT-HOLD-WAITING"
-;;          ((org-agenda-overriding-header "Available Tasks")
-;;           (org-agenda-skip-function
-;;            '(oh/agenda-skip :headline-if '(project)
-;;                             :subtree-if '(inactive habit scheduled deadline)
-;;                             :subtree-if-unrestricted-and '(subtask)
-;;                             :subtree-if-restricted-and '(single-task)))
-;;           (org-agenda-sorting-strategy '(category-keep))))
-;;         ("p" "Projects" tags-todo "-CANCELLED/!"
-;;          ((org-agenda-overriding-header "Currently Active Projects")
-;;           (org-agenda-skip-function
-;;            '(oh/agenda-skip :subtree-if '(non-project inactive habit)))
-;;               (org-agenda-sorting-strategy '(category-keep))
-;;               (org-tags-match-list-sublevels 'indented)))
-;;         ("w" "Waiting Tasks" tags-todo "-CANCELLED/!WAITING|HOLD"
-;;          ((org-agenda-overriding-header "Waiting and Postponed Tasks")
-;;           (org-agenda-skip-function '(oh/agenda-skip :subtree-if '(project habit)))))))
-
-
 ;; org-pomodoro
 (prelude-require-packages '(org-pomodoro))
 (require 'org-pomodoro)
@@ -689,5 +617,33 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (add-hook 'org-mode-hook 'goldbar/org-mode-hook-setup)
 ;; ??
 (setq org-agenda-span 1)
+
+;; org link setup
+
+;;;; ol-jira
+(defvar ol-jira-url-prefix "http://ol-jira.us.oracle.com/browse")
+(org-link-set-parameters
+ "ol-jira"
+ :follow (lambda (path) (browse-url (concat ol-jira-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a>%s/%s</a>"
+                     ol-jira-url-prefix (or desc path)))))
+ :face '(:foreground "red" :inherit)
+ :help-echo "oracle labs jira link")
+
+(defvar wikipedia-url-prefix "https://en.wikipedia.org/wiki")
+(org-link-set-parameters
+ "wikipedia"
+ :follow (lambda (path) (browse-url (concat wikipedia-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a>%s/%s</a>"
+                     ol-jira-url-prefix (or desc path)))))
+ :face '(:foreground "blue" :inherit)
+ :help-echo "wikipedia link")
+
 (provide 'org-goldbar)
 ;;; org-goldbar.el ends here
