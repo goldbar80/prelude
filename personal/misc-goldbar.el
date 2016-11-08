@@ -28,6 +28,9 @@
 ;; git-gutter
 (prelude-require-package 'git-gutter+)
 
+;; stackoverflow ...
+(prelude-require-package 'sx)
+
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
