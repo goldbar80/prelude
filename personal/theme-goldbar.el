@@ -39,6 +39,7 @@
 (setq spaceline-window-numbers-unicode t)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-modified)
 (setq spaceline-minor-modes-p nil)
+(setq spaceline-which-function-p nil)
 (setq spaceline-global-p nil)
 (setq spaceline-version-control-p t)
 (setq anzu-cons-mode-line-p nil)
