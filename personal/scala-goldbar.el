@@ -3,6 +3,7 @@
 (prelude-require-packages '(scala-mode ensime))
 
 (require 'ensime)
+(setq ensime-startup-snapshot-notification nil)
 (add-hook 'scala-mode-hook 'ensime-mode)
 
 ;; apply scala mode to .sc file
