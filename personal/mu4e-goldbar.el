@@ -83,6 +83,10 @@
       smtpmail-stream-type (quote ssl)
       smtpmail-debug-info t)
 
+;; mode-line icon
+(setq display-time-mail-icon (all-the-icons-octicon "mail"))
+(setq display-time-mail-string (all-the-icons-octicon "mail"))
+
 
 (provide 'mu4e-goldbar)
 ;;; mu4e-goldbar.el ends here
