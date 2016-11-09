@@ -2,7 +2,22 @@
 
 ;; Define the backend itself
 (org-export-define-derived-backend 'goldbar/confluence 'confluence
-  :translate-alist '((paragraph . goldbar/org-confluence-paragraph)))
+  :translate-alist '((paragraph . goldbar/org-confluence-paragraph)
+                     (link . goldbar/org-confluence-link)))
+
+(defun goldbar/org-confluence-link (link desc info)
+  (let ((raw-link (org-element-property :raw-link link)))
+    (cond
+     ((org-export-custom-protocol-maybe link desc 'goldbar/confluence))
+     (t
+      (concat "["
+            (when (org-string-nw-p desc) (format "%s|" desc))
+            (cond
+             ((string-match "^confluence:" raw-link)
+              (replace-regexp-in-string "^confluence:" "" raw-link))
+             (t
+              raw-link))
+            "]")))))
 
 (defun goldbar/org-confluence-paragraph (paragraph contents info)
   (org-ascii--fill-string
@@ -49,6 +64,8 @@ is non-nil."
   (interactive)
   (org-export-to-buffer 'goldbar/confluence "*org CONFLUENCE Export*"
     async subtreep visible-only body-only ext-plist (lambda () (text-mode))))
+
+(add-to-list 'org-export-backends 'goldbar/confluence)
 
 
 (provide 'ox-confluence-goldbar)
