@@ -39,6 +39,8 @@
    (latex . t)
    (groovy . t)
    (gnuplot . t)
+   (sql . t)
+   (org . t)
    (plantuml . t))
  )
 
