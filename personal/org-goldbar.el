@@ -632,8 +632,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :export (lambda (path desc backend)
            (cond
             ((eq 'html backend)
-             (format "<a>%s/%s</a>"
-                     ol-jira-url-prefix (or desc path)))))
+             (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
+                     ol-jira-url-prefix path (or desc path)))
+            ((eq 'goldbar/confluence backend)
+             (format "{jira:%s}" path))
+            ))
  :face '(:foreground "red" :inherit)
  :help-echo "oracle labs jira link")
 
@@ -644,10 +647,18 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :export (lambda (path desc backend)
            (cond
             ((eq 'html backend)
-             (format "<a>%s/%s</a>"
-                     ol-jira-url-prefix (or desc path)))))
+             (format "<a href=\"%s/%s\">%s[wikipedia]</a>"
+                     wikipedia-url-prefix path (or desc path)))))
  :face '(:foreground "blue" :inherit)
  :help-echo "wikipedia link")
 
+(org-link-set-parameters
+ "git"
+ :follow (lambda (path) (magit-status-internal path))
+ :face '(:foreground "red" :inherit)
+ :export (lambda (path desc backend)
+           ;; not export 
+           (format "")
+           ))
 (provide 'org-goldbar)
 ;;; org-goldbar.el ends here
