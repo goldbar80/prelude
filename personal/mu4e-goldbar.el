@@ -84,8 +84,10 @@
       smtpmail-debug-info t)
 
 ;; mode-line icon
-(setq display-time-mail-icon (all-the-icons-octicon "mail"))
-(setq display-time-mail-string (all-the-icons-octicon "mail"))
+(setq display-time-mail-icon
+      (propertize (all-the-icons-octicon "mail") 'display `(raise -0.05) ))
+(setq display-time-mail-string
+      (propertize (all-the-icons-octicon "mail") 'display `(raise -0.05) ))
 
 
 (provide 'mu4e-goldbar)
