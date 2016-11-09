@@ -31,7 +31,7 @@
 (yahoo-weather-mode)
 
 (require 'spaceline-config)
-(setq powerline-default-separator 'slant)
+(setq powerline-default-separator 'bar)
 (setq powerline-height 21)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)
@@ -146,9 +146,6 @@
 (spaceline-helm-mode)
 (spaceline-info-mode)
 
-;; major mode icons
-;; (prelude-require-package 'mode-icons)
-;; (mode-icons-mode)
 
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
