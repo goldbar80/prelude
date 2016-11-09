@@ -657,8 +657,43 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :follow (lambda (path) (magit-status-internal path))
  :face '(:foreground "red" :inherit)
  :export (lambda (path desc backend)
-           ;; not export 
+           ;; not export
            (format "")
            ))
+
+
+;; screencapture
+;; http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
+
+(if (window-system)
+    (defun my-org-screenshot (basename)
+      "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+      (interactive
+       (let ((default_name (format-time-string "%Y%m%d_%H%M%S")))
+           (list
+            (read-string (format "file name prefix (%s)): " default_name) nil nil default_name))))
+      (message basename)
+      (org-display-inline-images)
+      (setq filename
+            (concat
+             (file-name-base (buffer-file-name))
+             "/"
+             basename
+             ".png"))
+      (unless (file-exists-p (file-name-directory filename))
+        (make-directory (file-name-directory filename)))
+                                        ; take screenshot
+      (if (eq system-type 'darwin)
+          (call-process "screencapture" nil nil nil "-i" filename))
+      (if (eq system-type 'gnu/linux)
+          (call-process "import" nil nil nil filename))
+                                        ; insert into file if correctly taken
+      (if (file-exists-p filename)
+          (insert (concat "[[file:" filename "]]"))))
+  )
+
+
+
 (provide 'org-goldbar)
 ;;; org-goldbar.el ends here
