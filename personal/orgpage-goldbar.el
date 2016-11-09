@@ -10,6 +10,8 @@
 (setq op/site-main-title "Meh....")
 (setq op/site-sub-title "Emacs, Programming, and ....")
 (setq op/personal-disqus-shortname "goldbar80github")
+(setq op/repository-org-branch "source")
+(setq op/repository-html-branch "master")
 (setq op/theme 'kactus)
 
 (provide 'orgpage-goldbar)
