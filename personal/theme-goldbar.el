@@ -148,6 +148,10 @@
 (spaceline-helm-mode)
 (spaceline-info-mode)
 
+;; clippy
+(prelude-require-package 'clippy)
+(require 'clippy)
+(setq clippy-tip-show-function #'clippy-popup-tip-show)
 
 (provide 'theme-goldbar)
 ;;; theme-goldbar.el ends here
