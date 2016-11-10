@@ -31,6 +31,13 @@
 ;; stackoverflow ...
 (prelude-require-package 'sx)
 
+;; osx-dictionary
+;; this doesn't work as the 'osx-dictionary-cli crashes
+;; (when (eq system-type 'darwin)
+;;     (prelude-require-package 'osx-dictionary)
+;;     (global-set-key (kbd "S-C-d") 'osx-dictionary-search-pointer)
+;;   )
+
 ;; whitespace witdh
 (setq whitespace-line-column 120)
 
