@@ -11,6 +11,8 @@
 
 (load-theme 'spacemacs-dark)
 
+(setq neo-theme (if window-system 'icons 'arrow))
+
 ;;(setq solarized-high-contrast-mode-line nil)
 (setq ns-use-srgb-colorspace nil)
 

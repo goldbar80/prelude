@@ -656,6 +656,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :face '(:foreground "red" :inherit)
  :help-echo "oracle labs jira link")
 
+;;;; wikipedia
 (defvar wikipedia-url-prefix "https://en.wikipedia.org/wiki")
 (org-link-set-parameters
  "wikipedia"
@@ -668,9 +669,18 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :face '(:foreground "blue" :inherit)
  :help-echo "wikipedia link")
 
+
+;;;; magit: format "<git dir>@<branch>". <branch> is optional
 (org-link-set-parameters
- "git"
- :follow (lambda (path) (magit-status-internal path))
+ "magit"
+ :follow (lambda (path)
+           (let* ((splited (split-string path "@" t nil))
+                 (dir (nth 0 splited))
+                 (branch (nth 1 splited))
+                 )
+             (magit-status-internal dir)
+             (if (not (eq branch nil))
+                 (magit-checkout branch))))
  :face '(:foreground "red" :inherit)
  :export (lambda (path desc backend)
            ;; not export
