@@ -640,6 +640,22 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :face '(:foreground "red" :inherit)
  :help-echo "oracle labs jira link")
 
+;;;; jira (oracle)
+(defvar ol-jira-url-prefix "http://jira.oraclecorp.com/browse")
+(org-link-set-parameters
+ "jira"
+ :follow (lambda (path) (browse-url (concat ol-jira-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
+                     ol-jira-url-prefix path (or desc path)))
+            ((eq 'goldbar/confluence backend)
+             (format "{jira:%s}" path))
+            ))
+ :face '(:foreground "red" :inherit)
+ :help-echo "oracle labs jira link")
+
 (defvar wikipedia-url-prefix "https://en.wikipedia.org/wiki")
 (org-link-set-parameters
  "wikipedia"
