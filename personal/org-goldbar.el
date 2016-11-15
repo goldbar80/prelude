@@ -41,6 +41,7 @@
    (gnuplot . t)
    (sql . t)
    (org . t)
+   (shell . t)
    (plantuml . t))
  )
 
@@ -624,6 +625,22 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ;; org link setup
 
+;;;; ol-crucible
+(defvar ol-crucible-url-prefix "http://ol-crucible.us.oracle.com/cru")
+(org-link-set-parameters
+ "ol-crucible"
+ :follow (lambda (path) (browse-url (concat ol-crucible-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
+                     ol-crucible-url-prefix path (or desc path)))
+            ((eq 'goldbar/confluence backend)
+             (format "[%s/%s]" ol-crucible-url-prefix path))
+            ))
+ :face '(:foreground "red" :inherit)
+ :help-echo "oracle labs jira link")
+
 ;;;; ol-jira
 (defvar ol-jira-url-prefix "http://ol-jira.us.oracle.com/browse")
 (org-link-set-parameters
@@ -641,17 +658,17 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :help-echo "oracle labs jira link")
 
 ;;;; jira (oracle)
-(defvar ol-jira-url-prefix "http://jira.oraclecorp.com/browse")
+(defvar jira-url-prefix "https://jira.oraclecorp.com/jira/browse")
 (org-link-set-parameters
  "jira"
- :follow (lambda (path) (browse-url (concat ol-jira-url-prefix "/" path)))
+ :follow (lambda (path) (browse-url (concat jira-url-prefix "/" path)))
  :export (lambda (path desc backend)
            (cond
             ((eq 'html backend)
              (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
-                     ol-jira-url-prefix path (or desc path)))
+                     jira-url-prefix path (or desc path)))
             ((eq 'goldbar/confluence backend)
-             (format "{jira:%s}" path))
+             (format "[%s/%s]" jira-url-prefix path))
             ))
  :face '(:foreground "red" :inherit)
  :help-echo "oracle labs jira link")
@@ -683,9 +700,13 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                  (magit-checkout branch))))
  :face '(:foreground "red" :inherit)
  :export (lambda (path desc backend)
-           ;; not export
-           (format "")
-           ))
+           (let* ((splited (split-string path "@" t nil))
+                  (dir (nth 0 splited))
+                  (branch (nth 1 splited)))
+             (format "%s" branch)
+             )
+           )
+ )
 
 
 ;; screencapture
