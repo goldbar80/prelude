@@ -9,7 +9,7 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
-(load-theme 'spacemacs-dark)
+(load-theme 'spacemacs-light)
 
 ;;(setq solarized-high-contrast-mode-line nil)
 (setq ns-use-srgb-colorspace nil)
