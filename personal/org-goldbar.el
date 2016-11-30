@@ -41,6 +41,7 @@
    (gnuplot . t)
    (sql . t)
    (org . t)
+   (shell . t)
    (plantuml . t))
  )
 
@@ -624,6 +625,22 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 ;; org link setup
 
+;;;; ol-crucible
+(defvar ol-crucible-url-prefix "http://ol-crucible.us.oracle.com/cru")
+(org-link-set-parameters
+ "ol-crucible"
+ :follow (lambda (path) (browse-url (concat ol-crucible-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
+                     ol-crucible-url-prefix path (or desc path)))
+            ((eq 'goldbar/confluence backend)
+             (format "[%s/%s]" ol-crucible-url-prefix path))
+            ))
+ :face '(:foreground "red" :inherit)
+ :help-echo "oracle labs jira link")
+
 ;;;; ol-jira
 (defvar ol-jira-url-prefix "http://ol-jira.us.oracle.com/browse")
 (org-link-set-parameters
@@ -640,6 +657,23 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :face '(:foreground "red" :inherit)
  :help-echo "oracle labs jira link")
 
+;;;; jira (oracle)
+(defvar jira-url-prefix "https://jira.oraclecorp.com/jira/browse")
+(org-link-set-parameters
+ "jira"
+ :follow (lambda (path) (browse-url (concat jira-url-prefix "/" path)))
+ :export (lambda (path desc backend)
+           (cond
+            ((eq 'html backend)
+             (format "<a href=\"%s/%s\">%s[ol-ira]</a>"
+                     jira-url-prefix path (or desc path)))
+            ((eq 'goldbar/confluence backend)
+             (format "[%s/%s]" jira-url-prefix path))
+            ))
+ :face '(:foreground "red" :inherit)
+ :help-echo "oracle labs jira link")
+
+;;;; wikipedia
 (defvar wikipedia-url-prefix "https://en.wikipedia.org/wiki")
 (org-link-set-parameters
  "wikipedia"
@@ -652,46 +686,63 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
  :face '(:foreground "blue" :inherit)
  :help-echo "wikipedia link")
 
+
+;;;; magit: format "<git dir>@<branch>". <branch> is optional
 (org-link-set-parameters
- "git"
- :follow (lambda (path) (magit-status-internal path))
+ "magit"
+ :follow (lambda (path)
+           (let* ((splited (split-string path "@" t nil))
+                 (dir (nth 0 splited))
+                 (branch (nth 1 splited))
+                 )
+             (magit-status-internal dir)
+             (if (not (eq branch nil))
+                 (magit-checkout branch))))
  :face '(:foreground "red" :inherit)
  :export (lambda (path desc backend)
-           ;; not export
-           (format "")
-           ))
+           (let* ((splited (split-string path "@" t nil))
+                  (dir (nth 0 splited))
+                  (branch (nth 1 splited)))
+             (format "%s" branch)
+             )
+           )
+ )
 
 
 ;; screencapture
 ;; http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
 
 (if (window-system)
-    (defun my-org-screenshot (basename)
-      "Take a screenshot into a time stamped unique-named file in the
+    (progn
+      (defun goldbar/org-screenshot (basename)
+        "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
-      (interactive
-       (let ((default_name (format-time-string "%Y%m%d_%H%M%S")))
+        (interactive
+         (let ((default_name (format-time-string "%Y%m%d_%H%M%S")))
            (list
             (read-string (format "file name prefix (%s)): " default_name) nil nil default_name))))
-      (message basename)
-      (org-display-inline-images)
-      (setq filename
-            (concat
-             (file-name-base (buffer-file-name))
-             "/"
-             basename
-             ".png"))
-      (unless (file-exists-p (file-name-directory filename))
-        (make-directory (file-name-directory filename)))
+        (message basename)
+        (org-display-inline-images)
+        (setq filename
+              (concat
+               (file-name-base (buffer-file-name))
+               "/"
+               basename
+               ".png"))
+        (unless (file-exists-p (file-name-directory filename))
+          (make-directory (file-name-directory filename)))
                                         ; take screenshot
-      (if (eq system-type 'darwin)
-          (call-process "screencapture" nil nil nil "-i" filename))
-      (if (eq system-type 'gnu/linux)
-          (call-process "import" nil nil nil filename))
+        (if (eq system-type 'darwin)
+            (call-process "screencapture" nil nil nil "-i" filename))
+        (if (eq system-type 'gnu/linux)
+            (call-process "import" nil nil nil filename))
                                         ; insert into file if correctly taken
-      (if (file-exists-p filename)
-          (insert (concat "[[file:" filename "]]"))))
-  )
+        (if (file-exists-p filename)
+            (insert (concat "[[file:" filename "]]"))))
+      (add-hook 'org-mode-hook
+                (lambda ()
+                  (local-set-key (kbd "C-c q" ) 'goldbar/org-screenshot)))
+      ))
 
 
 

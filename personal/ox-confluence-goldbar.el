@@ -3,7 +3,13 @@
 ;; Define the backend itself
 (org-export-define-derived-backend 'goldbar/confluence 'confluence
   :translate-alist '((paragraph . goldbar/org-confluence-paragraph)
-                     (link . goldbar/org-confluence-link)))
+                     (link . goldbar/org-confluence-link)
+                     (verbatim . goldbar/org-confluence-verbatim))
+  )
+
+(defun goldbar/org-confluence-verbatim (verbatim desc info)
+  (let ((raw-text (org-element-property :value verbatim)))
+    (format "\{\{%s\}\}" raw-text)))
 
 (defun goldbar/org-confluence-link (link desc info)
   (let ((raw-link (org-element-property :raw-link link)))
