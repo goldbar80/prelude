@@ -75,13 +75,16 @@
 (require 'smtpmail)
 
 (setq message-send-mail-function 'smtpmail-send-it
-      auth-sources (quote (macos-keychain-internet macos-keychain-generic))
       smtpmail-default-smtp-server "stbeehive.oracle.com"
       smtpmail-smtp-server "stbeehive.oracle.com"
       smtpmail-smtp-service 465
       smtpmail-smtp-user "jinha.kim@oracle.com"
       smtpmail-stream-type (quote ssl)
       smtpmail-debug-info t)
+
+(when (eq system-type 'darwin)
+  (setq auth-sources (quote (macos-keychain-internet macos-keychain-generic)))
+  )
 
 ;; mode-line icon
 (setq display-time-mail-icon
