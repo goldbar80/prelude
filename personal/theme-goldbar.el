@@ -9,16 +9,28 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
-(load-theme 'spacemacs-light)
+(load-theme 'spacemacs-dark)
+;;(load-theme 'dracula)
 
+;; neo tree
 (setq neo-theme (if window-system 'icons 'arrow))
+(setq neo-smart-open t)
+(setq projectile-switch-project-action 'neotree-projectile-action)
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (if project-dir
+        (if (neotree-toggle)
+            (progn
+              (neotree-dir project-dir)
+              (neotree-find file-name)))
+      (message "Could not find git project root."))))
 
-;;(setq solarized-high-contrast-mode-line nil)
-(setq ns-use-srgb-colorspace nil)
-
-;; powerline
-;; (setq moe-theme-mode-line-color 'yellow)
-;; (powerline-moe-theme)
+;; colorspace
+(when (eq system-type 'darwin)
+  (setq ns-use-srgb-colorspace nil))
 
 (prelude-require-packages '(powerline spaceline eyebrowse persp-mode window-numbering anzu all-the-icons use-package fancy-battery yahoo-weather))
 
@@ -33,7 +45,7 @@
 (yahoo-weather-mode)
 
 (require 'spaceline-config)
-(setq powerline-default-separator 'bar)
+(setq powerline-default-separator 'slant)
 (setq powerline-height 21)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)
@@ -61,11 +73,12 @@
 (spaceline-define-segment
     time "Time"
     (let* ((hour (string-to-number (format-time-string "%I")))
-           (icon (all-the-icons-wicon (format "time-%s" hour) :v-adjust 0.0)))
+           (icon (all-the-icons-wicon (format "time-%s" hour) :v-adjust 0.0))
+           (time (format-time-string "%H:%M ")))
       (concat
-       (propertize (format-time-string "%H:%M ") 'face `(:height 1 :inherit) 'display '(raise 0.1))
-       (propertize (format "%s" icon)
-                   'face `(:height 1 :family ,(all-the-icons-wicon-family) :inherit)
+       (propertize time 'face `(:inherit))
+       (propertize icon
+                   'face `(:family ,(all-the-icons-wicon-family) :inherit)
                    'display '(raise 0.0))))
     :tight t)
 
@@ -144,7 +157,39 @@
                     'display '(raise 0.0)
                     'face `(:height 1.0 :family ,(all-the-icons-icon-family-for-buffer) :inherit)))))
 
-(spaceline-spacemacs-theme `((time weather) :separator " | ") )
+(defun goldbar/ensime-modeline-string ()
+  "The string to display in the modeline.
+\"ENSIME\" only appears if we aren't connected. If connected,
+include connection-name, and possibly some state information."
+  (when ensime-mode
+    (let ((icon (all-the-icons-faicon "codepen"))
+          (status
+           (condition-case err
+               (let ((conn (ensime-connection-or-nil)))
+                 (cond ((not conn)
+                        (if (ensime-owning-server-process-for-source-file buffer-file-name)
+                            (all-the-icons-faicon "hourglass-start")
+                          (all-the-icons-wicon "lightening")
+                          ))
+                       ((ensime-connected-p conn)
+                        (let ((config (ensime-config conn)))
+                          (or (plist-get config :name)
+                              "unknown project")))
+                       (t "Dead Connection")))
+             (error "Error"))))
+      (concat
+       (propertize icon 'face `(:family ,(all-the-icons-faicon-family) :inherit) 'display `(raise -0.04))
+       " "
+       status)
+       )))
+
+
+(spaceline-define-segment
+    ensime "ensime status"
+    (when (bound-and-true-p ensime-mode)
+      (goldbar/ensime-modeline-string)))
+
+(spaceline-spacemacs-theme `((ensime time weather) :separator " | ") )
 (spaceline-helm-mode)
 (spaceline-info-mode)
 

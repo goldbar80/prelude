@@ -68,7 +68,11 @@
 ;; notifications
 (mu4e-alert-enable-mode-line-display)
 (mu4e-alert-enable-notifications)
-(mu4e-alert-set-default-style 'notifier)
+(if (eq system-type 'darwin)
+    (mu4e-alert-set-default-style 'notifier)
+  (mu4e-alert-set-default-style 'libnotify)
+  )
+
 (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
 (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
@@ -86,12 +90,30 @@
   (setq auth-sources (quote (macos-keychain-internet macos-keychain-generic)))
   )
 
-;; mode-line icon
-(setq display-time-mail-icon
-      (propertize (all-the-icons-octicon "mail") 'display `(raise -0.05) ))
-(setq display-time-mail-string
-      (propertize (all-the-icons-octicon "mail") 'display `(raise -0.05) ))
+;; mode-line formatter
+(defun goldbar/mu4e-alert-mode-line-formatter (mail-count)
+  "Slight modification from the default formatter.  Show MAIL-COUNT with icon in modeline."
+  (when (not (zerop mail-count))
+    (concat
+            (propertize
+             (all-the-icons-faicon "envelope")
+             'face `(:family ,(all-the-icons-faicon-family) :height 1.2 :inherit)
+             'display `(raise -0.03)
+             'help-echo (concat (if (= mail-count 1)
+                                    "You have an unread email"
+                                  (format "You have %s unread emails" mail-count))
+                                "\nClick here to view "
+                                (if (= mail-count 1) "it" "them"))
+             'mouse-face 'mode-line-highlight
+             'keymap '(mode-line keymap
+                                 (mouse-1 . mu4e-alert-view-unread-mails)
+                                 (mouse-2 . mu4e-alert-view-unread-mails)
+                                 (mouse-3 . mu4e-alert-view-unread-mails)))
+            (if (zerop mail-count)
+                " "
+              (format " %d" mail-count)))))
 
+(setq mu4e-alert-modeline-formatter #'goldbar/mu4e-alert-mode-line-formatter)
 
 (provide 'mu4e-goldbar)
 ;;; mu4e-goldbar.el ends here

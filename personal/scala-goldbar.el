@@ -1,6 +1,10 @@
 ;;; package --- hello
 
-(prelude-require-packages '(scala-mode ensime))
+(prelude-require-packages '(scala-mode))
+
+(use-package ensime
+  :ensure t
+  :pin melpa-stable)
 
 (require 'ensime)
 (setq ensime-startup-snapshot-notification nil)

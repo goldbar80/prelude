@@ -96,18 +96,23 @@
  ((eq window-system nil) nil)
  ((font-utils-exists-p "Source Code Pro")
   (let ((fontset "fontset-default"))
-    (set-fontset-font fontset 'unicode (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
-    (set-fontset-font fontset 'latin
-                      (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
-    (set-fontset-font fontset 'hangul
-                      '("NanumGothicCoding" . "unicode-bmp"))
     (if (eq system-type 'darwin)
-        (set-face-attribute 'default nil :font fontset :height 140)
-      (set-face-attribute 'default nil :font fontset :height 120)
-      )
-    )
-  )
- )
+        (progn
+          (set-face-attribute 'default nil :font fontset :height 140)
+          (set-fontset-font fontset 'unicode (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
+          (set-fontset-font fontset 'unicode (font-spec :family "Symbola monospacified for DejaVu Sans Mono" :registry "unicode-bmp"))
+          (set-fontset-font fontset 'latin
+                            (font-spec :family "Source Code Pro" :weight 'light :registry "unicode-bmp"))
+          (set-fontset-font fontset 'hangul
+                            '("NanumGothicCoding" . "unicode-bmp")))
+      (progn
+        (set-face-attribute 'default nil :font fontset :height 110)
+        (set-fontset-font fontset 'unicode (font-spec :family "Dejavu Sans Mono" :registry "unicode-bmp"))
+        (set-fontset-font fontset 'unicode (font-spec :family "Symbola monospacified for DejaVu Sans Mono" :registry "unicode-bmp"))
+        (set-fontset-font fontset 'latin
+                          (font-spec :family "Source Code Pro For Powerline" :registry "unicode-bmp"))
+        (set-fontset-font fontset 'hangul
+                          '("NanumGothicCoding" . "unicode-bmp")))))))
 
 (provide 'misc-goldbar)
 ;;; misc-goldbar.el ends here
