@@ -4,7 +4,9 @@
 (org-export-define-derived-backend 'goldbar/confluence 'confluence
   :translate-alist '((paragraph . goldbar/org-confluence-paragraph)
                      (link . goldbar/org-confluence-link)
-                     (verbatim . goldbar/org-confluence-verbatim))
+                     (verbatim . goldbar/org-confluence-verbatim)
+                     (table-row . goldbar/org-confluence-table-row)
+                     (table-cell . goldbar/org-confluence-table-cell))
   )
 
 (defun goldbar/org-confluence-verbatim (verbatim desc info)
@@ -36,6 +38,22 @@
         (make-string org-ascii-indented-line-width ?\s))
       (replace-regexp-in-string "\\`[ \t]+" "" contents)))
    (point-max) info))
+
+
+(defun goldbar/org-confluence-table-row  (table-row contents info)
+  (concat
+   (if (org-string-nw-p contents) (format "|%s" contents)
+     "")
+   (when (org-export-table-row-ends-header-p table-row info)
+     "|")))
+
+(defun goldbar/org-confluence-table-cell  (table-cell contents info)
+  (let ((table-row (org-export-get-parent table-cell)))
+    (concat
+     (when (org-export-table-row-starts-header-p table-row info)
+       "| ")
+     contents " |")))
+
 
 (defun goldbar/org-confluence-export-as-confluence
   (&optional async subtreep visible-only body-only ext-plist)

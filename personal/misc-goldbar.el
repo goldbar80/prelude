@@ -108,9 +108,10 @@
       (progn
         (set-face-attribute 'default nil :font fontset :height 110)
         (set-fontset-font fontset 'unicode (font-spec :family "Dejavu Sans Mono" :registry "unicode-bmp"))
-        (set-fontset-font fontset 'unicode (font-spec :family "Symbola monospacified for DejaVu Sans Mono" :registry "unicode-bmp"))
+        (set-fontset-font fontset 'unicode (font-spec :family "Symbola monospacified for DejaVu Sans Mono" :registry "unicode-bmp") nil 'append)
         (set-fontset-font fontset 'latin
                           (font-spec :family "Source Code Pro For Powerline" :registry "unicode-bmp"))
+                          ;(font-spec :family "DejaVu Sans Mono" :registry "unicode-bmp"))
         (set-fontset-font fontset 'hangul
                           '("NanumGothicCoding" . "unicode-bmp")))))))
 
