@@ -9,7 +9,7 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
 
-(load-theme 'apropospriate-light)
+(load-theme 'spacemacs-light)
 ;;(load-theme 'dracula)
 
 ;; neo tree
