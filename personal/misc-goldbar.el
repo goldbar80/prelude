@@ -28,6 +28,10 @@
 ;; git-gutter
 (prelude-require-package 'git-gutter+)
 
+;; unfill paragraph
+(prelude-require-package 'unfill)
+(global-set-key (kbd "M-q") 'unfill-toggle)
+
 ;; stackoverflow ...
 (prelude-require-package 'sx)
 
