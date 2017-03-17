@@ -116,60 +116,12 @@
 ;; agenda setting
 (require 'org-habit)
 (setq org-agenda-files (quote ("~/syncthing/agenda")))
-;; org-pomodoro
-(prelude-require-packages '(org-pomodoro))
-(require 'org-pomodoro)
-(setq org-pomodoro-keep-killed-pomodoro-time t)
-                                        ; shortcut
-(global-set-key (kbd "C-c C-x C-i") 'org-pomodoro)
-(global-set-key (kbd "C-c C-x C-o") 'org-pomodoro)
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-x C-i") 'org-pomodoro)
-            (local-set-key (kbd "C-c C-x C-o") 'org-pomodoro))
-          'append)
-                                        ; agenda shortcut
-                                        ; Needs terminal-notifier (brew install terminal-notifier)
-(defun notify-system (title message)
-  (if (eq window-system 'darwin)
-      (call-process "terminal-notifier"
-                nil 0 nil
-                "-group" "Emacs"
-                "-title" title
-                "-sender" "org.gnu.Emacs"
-                "-message" message)
-    (call-process "notify-send"
-                  nil 0 nil
-                  title message)))
-
-                                        ; org-pomodoro mode hooks
-(if (eq window-system 'darwin)
-    (progn
-      (add-hook 'org-pomodoro-finished-hook
-                (lambda ()
-                  (notify-system "Pomodoro completed!" "Time for a break.")))
-      (add-hook 'org-pomodoro-break-finished-hook
-                (lambda ()
-                  (notify-system "Pomodoro Short Break Finished" "Ready for Another?")))
-      (add-hook 'org-pomodoro-long-break-finished-hook
-                (lambda ()
-                  (notify-system "Pomodoro Long Break Finished" "Ready for Another?")))
-      (add-hook 'org-pomodoro-killed-hook
-                (lambda ()
-                  (notify-system "Pomodoro Killed" "One does not simply kill a pomodoro!")))))
 
 
 (defun custom-org-agenda-mode-defaults ()
-  ;; (org-defkey org-agenda-mode-map "W" 'oh/agenda-remove-restriction)
-  ;; (org-defkey org-agenda-mode-map "N" 'oh/agenda-restrict-to-subtree)
-  ;; (org-defkey org-agenda-mode-map "P" 'oh/agenda-restrict-to-project)
   (org-defkey org-agenda-mode-map "q" 'bury-buffer)
-  (org-defkey org-agenda-mode-map "I" 'org-pomodoro)
-  (org-defkey org-agenda-mode-map "O" 'org-pomodoro)
   (org-defkey org-agenda-mode-map "i" 'org-agenda-clock-in)
-  (org-defkey org-agenda-mode-map "o" 'org-agenda-clock-out)
-  (org-defkey org-agenda-mode-map (kbd "C-c C-x C-i") 'org-pomodoro)
-  (org-defkey org-agenda-mode-map (kbd "C-c C-x C-o") 'org-pomodoro))
+  (org-defkey org-agenda-mode-map "o" 'org-agenda-clock-out))
 
 (add-hook 'org-agenda-mode-hook 'custom-org-agenda-mode-defaults 'append)
 
@@ -187,8 +139,8 @@
 (setq org-default-notes-file "~/.refile.org")
 
 ;; toc-org
-(prelude-require-packages '(toc-org))
-(add-hook 'org-mode-hook 'toc-org-enable)
+;;(prelude-require-packages '(toc-org))
+;;(add-hook 'org-mode-hook 'toc-org-enable)
 
 ;; company setting
 (defun goldbar/org-mode-hook-setup ()
