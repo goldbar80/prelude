@@ -94,11 +94,15 @@
                  (org-present-read-write)))))
 
 ;; org-reveal
-(prelude-require-packages '(ox-reveal))
-(require 'ox-reveal)
-(setq org-reveal-root (concat "file://" (getenv "HOME") "/git/reveal.js"))
-(setq org-reveal-mathjax t)
 
+(if (eq goldbar/server-mode nil)
+
+    (progn
+      ((prelude-require-packages '(ox-reveal))
+       (require 'ox-reveal)
+       (setq org-reveal-root (concat "file://" (getenv "HOME") "/git/reveal.js"))
+       (setq org-reveal-mathjax t)))
+)
 ;; org-ioslide
 (prelude-require-packages '(ox-ioslide))
 (require 'ox-ioslide)
