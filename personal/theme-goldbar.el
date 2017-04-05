@@ -22,11 +22,12 @@
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
     (if project-dir
-        (if (neotree-toggle)
+        (if (neotree-show)
             (progn
               (neotree-dir project-dir)
               (neotree-find file-name)))
       (message "Could not find git project root."))))
+(global-set-key (kbd "C-c C-p") 'neotree-project-dir)
 
 ;; colorspace
 (when (eq system-type 'darwin)
