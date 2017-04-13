@@ -26,33 +26,7 @@
       (setenv "https-proxy-host" "")
       (setq url-proxy-services nil))))
 
-;; (defun setup-proxy ()
-;;   "set up proxy"
-;;   (interactive)
-;;   (progn
-;;     (setenv "http_proxy" http-proxy-host)
-;;     (setenv "https_proxy" https-proxy-host)
-;;     (setq url-proxy-services
-;;           ;;'(("no_proxy" . no-proxy-host)
-;;           ;;("http" . http-proxy-host)
-;;           ;;("https" . https-proxy-host))))
-;;           '(("no_proxy" . "^\\(localhost\\|10.*\\|*.us.oracle.com\\)")
-;;             ("http" . "www-proxy.us.oracle.com:80")
-;;             ("https" . "www-proxy.us.oracle.com:80"))))
-;;   )
-
-;; (defun unset-proxy ()
-;;   "unset proxy"
-;;   (interactive)
-;;   (progn
-;;     (setenv "http_proxy" "")
-;;     (setenv "https-proxy-host" "")
-;;     (setq url-proxy-services nil))
-;;   )
-
-(if (and (fboundp 'server-running-p)
-         (not (server-running-p)))
+(require 'server)
+(if (not (server-running-p))
     (progn (setup-proxy)
            (server-start)))
-
-(setq magit-last-seen-setup-instructions "1.4.0")
