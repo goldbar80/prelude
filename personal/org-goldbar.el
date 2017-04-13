@@ -45,8 +45,11 @@
    (plantuml . t))
  )
 
-                                        ; disable code execution during exporting
-(setq org-export-babel-evaluate nil)
+                                        ; enable code execution during exporting
+                                        ; to do the header processing only, use
+                                        ; #+PROPERTY: header-args :eval never-export
+                                        ; in the org file header
+(setq org-export-babel-evaluate t)
 
 ;; ob-async
 (require 'ob-async)

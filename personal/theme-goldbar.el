@@ -59,7 +59,7 @@
       (add-to-list 'all-the-icons-mode-icon-alist '(mu4e-view-mode all-the-icons-octicon "mail-read"))
 
       (setq yahoo-weather-location "San Jose, USA")
-      (yahoo-weather-mode)
+      ;(yahoo-weather-mode)
 
       ;; override existing segments
       (spaceline-define-segment
