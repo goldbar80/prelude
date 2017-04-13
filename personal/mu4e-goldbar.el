@@ -27,7 +27,7 @@
             user-full-name  "Jinha Kim"
             mu4e-compose-signature
             (concat
-             "Cheers,\n"
+             "Kind Regards,\n"
              "Jinha\n"))
 
            ;; fancy character
