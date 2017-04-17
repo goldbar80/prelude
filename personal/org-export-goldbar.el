@@ -23,8 +23,7 @@
 ;; note the insertion of the \input statement for the vc information
 (add-to-list 'org-latex-classes
              '("memarticle"
-               ;;"\\documentclass[10pt,oneside,article]{memoir}\n\\input{vc} % vc package"
-               "\\documentclass[11pt,oneside,article]{memoir}"
+               "\\documentclass[11pt,oneside,article]{memoir}\n\\usepackage[minted]{org-preamble-xelatex}"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -33,13 +32,12 @@
 
 (add-to-list 'org-latex-classes
              '("mambo"
-               ;;"\\documentclass[10pt,oneside]{memoir}\n\\input{vc} % vc package"
-               "\\documentclass[11pt,oneside]{memoir}"
+               "\\documentclass[11pt,oneside]{memoir}\n\\usepackage[minted]{org-preamble-xelatex}"
                ("\\chapter{%s}" . "\\chapter*{%s}")
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+             )
 ;; LaTeX compilation command. For orgmode docs we just always use xelatex for convenience.
 ;; You can change it to pdflatex if you like, just remember to make the adjustments to the packages-alist below.
 (setq org-latex-pdf-process '("latexmk -pdflatex='xelatex -synctex=1 --shell-escape' -pdf %f"))
@@ -48,10 +46,12 @@
 ;; There's org-preamble-pdflatex as well, if you wish to use that instead.
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-packages-alist
-      '(("minted" "org-preamble-xelatex" t)
-        ("" "graphicx" t)
-        ("" "longtable" nil)
-        ("" "fullpage" t)
-        ("" "float" )))
+      '(;("minted" "org-preamble-xelatex" t)
+        ("" "minted" t)
+        ;("" "graphicx" t)
+        ;("" "longtable" nil)
+        ;("" "fullpage" t)
+        ;("" "float" )
+        ))
 
 (provide 'org-export-goldbar)
