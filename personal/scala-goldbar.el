@@ -4,14 +4,11 @@
 
 (use-package ensime
   :ensure t
-  :pin melpa-stable)
-
-(require 'ensime)
-(setq ensime-startup-snapshot-notification nil)
-(add-hook 'scala-mode-hook 'ensime-mode)
-
-;; apply scala mode to .sc file
-(add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
+  :init (progn
+          (add-hook 'scala-mode-hook 'ensime-mode))
+  :config (progn
+            (setq ensime-startup-snapshot-notification nil)
+            (add-to-list 'auto-mode-alist '("\\.sc" . scala-mode))))
 
 
 ;; for rscala

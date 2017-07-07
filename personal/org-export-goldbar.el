@@ -48,6 +48,7 @@
 (setq org-latex-packages-alist
       '(;("minted" "org-preamble-xelatex" t)
         ("" "minted" t)
+        ("" "amssymb" t)
         ;("" "graphicx" t)
         ;("" "longtable" nil)
         ;("" "fullpage" t)

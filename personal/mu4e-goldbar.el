@@ -57,6 +57,11 @@
                        "My settings for message composition."
                        (set-fill-column 72)
                        (flyspell-mode)))
+           ;; add me in Bcc
+           (add-hook 'mu4e-compose-mode-hook
+                     (defun my-add-bcc ()
+                       "Add a Bcc: header."
+                       (save-excursion (message-add-header "Bcc: jinha.kim@oracle.com\n"))))
 
            ;; add option to view html message in a browser
            ;; `aV` in view to activate
@@ -70,13 +75,13 @@
 
            ;; notifications
            (mu4e-alert-enable-mode-line-display)
-                                        ;(mu4e-alert-enable-notifications)
-                                        ;(if (eq system-type 'darwin)
-                                        ;    (mu4e-alert-set-default-style 'notifier)
-                                        ;  (mu4e-alert-set-default-style 'libnotify)
-                                        ;  )
+           (mu4e-alert-enable-notifications)
+           (if (eq system-type 'darwin)
+               (mu4e-alert-set-default-style 'notifier)
+             (mu4e-alert-set-default-style 'libnotify)
+             )
 
-                                        ;(add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+           (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
            (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
 
            (require 'smtpmail)

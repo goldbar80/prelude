@@ -7,10 +7,9 @@
 ;; theme
 (add-to-list 'custom-theme-load-path (concat prelude-dir "themes"))
 
-(prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme))
+(prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme zerodark-theme))
 
-(load-theme 'spacemacs-light)
-;;(load-theme 'dracula)
+(load-theme 'zerodark)
 
 ;; neo tree
 (setq neo-theme (if window-system 'icons 'arrow))

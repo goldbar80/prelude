@@ -58,6 +58,13 @@
                                         ; window setup
 (setq org-src-window-setup 'current-window)
 
+;; org-sticky-header
+(prelude-require-package 'org-sticky-header)
+(use-package org-sticky-header
+  :ensure t
+  :config
+  (org-sticky-header-mode))
+
 ;; org-bullets
 (prelude-require-package 'org-bullets)
 (require 'org-bullets)
