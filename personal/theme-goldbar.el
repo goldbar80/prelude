@@ -35,7 +35,7 @@
 (prelude-require-packages '(powerline spaceline eyebrowse persp-mode window-numbering anzu all-the-icons use-package fancy-battery yahoo-weather))
 
 (require 'spaceline-config)
-(setq powerline-default-separator 'slant)
+(setq powerline-default-separator 'bar)
 (setq powerline-height 21)
 (eyebrowse-mode 1)
 (window-numbering-mode 1)

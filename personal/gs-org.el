@@ -2,12 +2,13 @@
 
 ;;; Code:
 ;; Some general settings
-;;(setq org-directory "~/org")
-;;(setq org-default-notes-file "~/org/refile.org")
-;;(defvar org-default-diary-file "~/org/diary.org")
-;;(setq org-agenda-files (quote ("~/org")))
+;(setq org-directory "~/org")
+;(setq org-default-notes-file "~/org/refile.org")
+;(defvar org-default-diary-file "~/org/diary.org")
+;(setq org-agenda-files (quote ("~/org")))
 
 ;; Display properties
+(setq org-agenda-window-setup 'current-window)
 (setq org-cycle-separator-lines 0)
 (setq org-tags-column 80)
 (setq org-agenda-tags-column org-tags-column)
@@ -114,13 +115,15 @@ Callers of this function already widen the buffer view."
 ;; Define the custum capture templates
 (defvar org-capture-templates
        '(("t" "todo" entry (file org-default-notes-file)
-	  "* TODO %?\n%u\n%a\n")
+	  "* TODO %?\n%u\n%a\n" :clock-in t :clock-resume t)
 	 ("b" "Blank" entry (file org-default-notes-file)
 	  "* %?\n%u")
 	 ("m" "Meeting" entry (file org-default-notes-file)
 	  "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
 	 ("d" "Diary" entry (file+datetree "~/org/diary.org")
 	  "* %?\n%U\n" :clock-in t :clock-resume t)
+	 ("D" "Daily Log" entry (file "~/org/daily-log.org")
+	  "* %u %?\n*Summary*: \n\n*Problem*: \n\n*Insight*: \n\n*Tomorrow*: " :clock-in t :clock-resume t)
 	 ("i" "Idea" entry (file org-default-notes-file)
 	  "* %? :IDEA: \n%u" :clock-in t :clock-resume t)
 	 ("n" "Next Task" entry (file+headline org-default-notes-file "Tasks")
@@ -184,10 +187,16 @@ Switch projects and subprojects from NEXT back to TODO"
 (setq org-agenda-compact-blocks nil)
 
 ;; Set the times to display in the time grid
-(setq org-agenda-time-grid
-  '((daily today require-timed)
-    "----------------"
-    (800 1200 1600 2000)))
+;; (setq org-agenda-time-grid
+;;   '((daily today require-timed)
+;;     "----------------"
+;;     (800 1200 1600 2000)))
+
+;; always show time grid in agenda view
+(setq org-agenda-time-grid '((daily today require-timed)
+                              #("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" 0 16 (org-heading t))
+                              (800 1000 1200 1400 1600 1800 2000)))
+(setq org-agenda-block-separator ?━)
 
 ;; Some helper functions for selection within agenda views
 (defun gs/select-with-tag-function (select-fun-p)
@@ -274,32 +283,33 @@ show this warning instead."
 
 ;; Custom agenda command definitions
 (setq org-agenda-custom-commands
-      '(("h" "Habits" agenda "STYLE=\"habit\""
+      '(("h" "Habits" agenda fi"STYLE=\"habit\""
 	 ((org-agenda-overriding-header "Habits")
 	  (org-agenda-sorting-strategy
 	   '(todo-state-down effort-up category-keep))))
 	(" " "Export Schedule" ((agenda "" ((org-agenda-overriding-header "Today's Schedule:")
-					    (org-agenda-span 1)
+					    (org-agenda-span 'day)
+					    (org-agenda-ndays 1)
 					    (org-agenda-start-on-weekday nil)
-                                            (org-agenda-start-day "+0d")
+					    (org-agenda-start-day "+0d")
 					    (org-agenda-todo-ignore-deadlines nil)))
-				(tags-todo "-CANCELLED-ARCHIVE/!NEXT"
+				(tags-todo "-INACTIVE-CANCELLED-ARCHIVE/!NEXT"
 					   ((org-agenda-overriding-header "Next Tasks:")
 					    ))
-				(alltodo ""
+				(tags "REFILE-ARCHIVE-REFILE=\"nil\""
 				      ((org-agenda-overriding-header "Tasks to Refile:")
-                                       (org-agenda-files '("~/.refile.org"))
-				       ))
+				       (org-tags-match-list-sublevels nil)))
 				(tags-todo "-INACTIVE-HOLD-CANCELLED-REFILE-ARCHIVEr/!"
 					   ((org-agenda-overriding-header "Active Projects:")
 					    (org-agenda-skip-function 'gs/select-projects)))
 				(tags-todo "-INACTIVE-HOLD-CANCELLED-REFILE-ARCHIVE-STYLE=\"habit\"/!-NEXT"
 					   ((org-agenda-overriding-header "Standalone Tasks:")
 					    (org-agenda-skip-function 'gs/select-standalone-tasks)))
-				(agenda "" ((org-agenda-overriding-header "Week At A Glance:")
-					    (org-agenda-span 5)
-					    (org-agenda-start-day "+1d")
-					    (org-agenda-prefix-format '((agenda . "  %-12:c%?-12t %s [%b] ")))))
+				;; (agenda "" ((org-agenda-overriding-header "Week At A Glance:")
+				;; 	    (org-agenda-ndays 5)
+				;; 	    (org-agenda-start-day "+1d")
+				;; 	    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))
+				;; 	    (org-agenda-prefix-format '((agenda . "  %-12:c%?-12t %s [%b] ")))))
 				(tags-todo "-INACTIVE-HOLD-CANCELLED-REFILE-ARCHIVE/!-NEXT"
 					   ((org-agenda-overriding-header "Remaining Project Tasks:")
 					    (org-agenda-skip-function 'gs/select-project-tasks)))
@@ -319,7 +329,7 @@ show this warning instead."
 	  (org-agenda-todo-ignore-deadlines 'near)
 	  (org-agenda-todo-ignore-scheduled t)))
 	("X" "Agenda" ((agenda "") (alltodo))
-	 ((org-agenda-span 10)
+	 ((org-agenda-ndays 10)
 	  (org-agenda-start-on-weekday nil)
 	  (org-agenda-start-day "-1d")
 	  (org-agenda-start-with-log-mode t)

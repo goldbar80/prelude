@@ -53,8 +53,7 @@
 
 ;; ob-async
 (require 'ob-async)
-(add-to-list 'org-ctrl-c-ctrl-c-hook 'ob-async-org-babel-execute-src-block)
-
+;;(add-to-list 'org-ctrl-c-ctrl-c-hook 'ob-async-org-babel-execute-src-block)
                                         ; window setup
 (setq org-src-window-setup 'current-window)
 
@@ -129,7 +128,7 @@
 
 ;; agenda setting
 (require 'org-habit)
-(setq org-agenda-files (quote ("~/syncthing/agenda")))
+(setq org-agenda-files (quote ("~/Dropbox/agenda")))
 
 
 (defun custom-org-agenda-mode-defaults ()
@@ -150,7 +149,7 @@
 
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
-(setq org-default-notes-file "~/.refile.org")
+(setq org-default-notes-file "~/Dropbox/.refile.org")
 
 ;; toc-org
 ;;(prelude-require-packages '(toc-org))
