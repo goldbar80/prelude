@@ -24,3 +24,4 @@ tramp
 /themes/*.el
 .emacs.desktop
 .emacs.desktop.lock
+network-security.data
