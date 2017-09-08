@@ -104,14 +104,13 @@
 
 ;; org-reveal
 
-(if (eq goldbar/server-mode nil)
-    (progn
-      (prelude-require-packages '(ox-reveal))
-      (require 'ox-reveal)
-      (setq org-reveal-root (concat "file://" (getenv "HOME") "/git/reveal.js"))
-      (setq org-reveal-mathjax t)
-      )
+(progn
+  (prelude-require-packages '(ox-reveal))
+  (require 'ox-reveal)
+  (setq org-reveal-root (concat "file://" (getenv "HOME") "/git/reveal.js"))
+  (setq org-reveal-mathjax t)
   )
+
 ;; org-ioslide
 (prelude-require-packages '(ox-ioslide))
 (require 'ox-ioslide)
@@ -149,7 +148,7 @@
 
 ;; org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
-(setq org-default-notes-file "~/Dropbox/.refile.org")
+(setq org-default-notes-file "~/Dropbox/agenda/.refile.org")
 
 ;; toc-org
 ;;(prelude-require-packages '(toc-org))

@@ -1,8 +1,6 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-(setq goldbar/server-mode nil)
-
 (add-to-list 'load-path prelude-personal-dir)
 (let ((default-directory  "/usr/local/share/emacs/site-lisp"))
      (normal-top-level-add-subdirs-to-load-path))

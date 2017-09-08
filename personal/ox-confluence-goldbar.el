@@ -3,20 +3,39 @@
 ;; Define the backend itself
 (org-export-define-derived-backend 'goldbar/confluence 'confluence
   :translate-alist '((paragraph . goldbar/org-confluence-paragraph)
+                     (headline . goldbar/org-confluence-headline)
                      (link . goldbar/org-confluence-link)
+                     (src-block . goldbar/org-confluence-src-block)
                      (verbatim . goldbar/org-confluence-verbatim)
+                     (code . goldbar/org-confluence-verbatim)
                      (table-row . goldbar/org-confluence-table-row)
                      (table-cell . goldbar/org-confluence-table-cell))
   )
+
+
+(defun goldbar/org-confluence-headline (headline contents info)
+  (let* ((low-level-rank (org-export-low-level-p headline info))
+	 (text (org-export-data (org-element-property :title headline)
+				info))
+	 (todo (org-export-data (org-element-property :todo-keyword headline)
+				info))
+	 (level (org-export-get-relative-level headline info)))
+    ;; Else: Standard headline.
+    (format "h%s. %s\n%s" level text
+            (if (org-string-nw-p contents) contents ""))))
+
 
 (defun goldbar/org-confluence-verbatim (verbatim desc info)
   (let ((raw-text (org-element-property :value verbatim)))
     (format "\{\{%s\}\}" raw-text)))
 
 (defun goldbar/org-confluence-link (link desc info)
-  (let ((raw-link (org-element-property :raw-link link)))
+  (let* ((raw-link (org-element-property :raw-link link))
+        (file-name (file-name-nondirectory raw-link))
+        (ext (file-name-extension raw-link)))
     (cond
      ((org-export-custom-protocol-maybe link desc 'goldbar/confluence))
+     ((string= ext "png") (concat "!" file-name "|width=!"))
      (t
       (concat "["
             (when (org-string-nw-p desc) (format "%s|" desc))
@@ -26,6 +45,14 @@
              (t
               raw-link))
             "]")))))
+
+(defun goldbar/org-confluence-src-block (src-block contents info)
+  ;; FIXME: provide a user-controlled variable for theme
+  (let* ((lang (org-element-property :language src-block))
+         (language (or (cdr (assoc lang org-confluence-lang-alist)) lang))
+         (content (org-export-format-code-default src-block info)))
+    (org-confluence--block language "Confluence" content)))
+
 
 (defun goldbar/org-confluence-paragraph (paragraph contents info)
   (org-ascii--fill-string
