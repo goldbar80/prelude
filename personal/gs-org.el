@@ -196,9 +196,9 @@ Switch projects and subprojects from INPROGRESS back to TODO"
 ;;     (800 1200 1600 2000)))
 
 ;; always show time grid in agenda view
-(setq org-agenda-time-grid '((daily today require-timed)
-                              #("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" 0 16 (org-heading t))
-                              (800 1000 1200 1400 1600 1800 2000)))
+;; (setq org-agenda-time-grid '((daily today require-timed)
+;;                               #("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" 0 16 (org-heading t))
+;;                               (800 1000 1200 1400 1600 1800 2000)))
 (setq org-agenda-block-separator ?━)
 
 ;; Some helper functions for selection within agenda views
@@ -295,6 +295,7 @@ show this warning instead."
               (org-agenda-ndays 1)
               (org-agenda-start-on-weekday nil)
               (org-agenda-start-day "+0d")
+              (org-agenda-log-mode-items '(closed clock))
               (org-agenda-todo-ignore-deadlines nil)))
         (tags-todo "-INACTIVE-CANCELLED-ARCHIVE/!INPROGRESS"
              ((org-agenda-overriding-header "Next Tasks:")

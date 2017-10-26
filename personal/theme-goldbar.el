@@ -9,7 +9,7 @@
 
 (prelude-require-packages '(moe-theme solarized-theme dracula-theme doom-themes neotree spacemacs-theme zerodark-theme))
 
-(load-theme 'zerodark)
+(load-theme 'doom-one)
 
 ;; neo tree
 (setq neo-theme (if window-system 'icons 'arrow))
@@ -112,7 +112,7 @@
   "Function to return the Spaceline formatted GIT Version Control text."
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
     (concat
-     (propertize (all-the-icons-alltheicon "git") 'face '(:height 1.1 :inherit) 'display '(raise 0.1))
+     (propertize (all-the-icons-alltheicon "git") 'face '(:height 1.1 :inherit) 'display '(raise 0.05))
      (propertize (format " %s" branch) 'face `(:inherit) 'display '(raise 0.1)))))
 
 (defun spaceline---svn-vc ()
